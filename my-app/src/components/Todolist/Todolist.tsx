@@ -4,6 +4,8 @@ import styles from './Todolist.module.css'
 export type TodolistPropsType = {
     title: string
     tasks: Array<tasksPropsType>
+    removeTask: (id: number) => void;
+    changeFilter: (value: FilterValuesType) => void;
 }
 export type tasksPropsType = {
     id: number
@@ -11,7 +13,18 @@ export type tasksPropsType = {
     isDone: boolean
 }
 
+export type FilterValuesType = 'все' | 'активные' | 'выполненные'
+
+
 const Todolist = (props: TodolistPropsType) => {
+
+    let tasksElements = props.tasks
+        .map(t => <li>
+            <input type='checkbox' checked={t.isDone}/>
+            <span>{t.title}</span>
+            <button className={styles.buttTasks} onClick={() => props.removeTask(t.id)}>x</button>
+        </li>)
+
     return (
         <div>
             <h3>{props.title}</h3>
@@ -19,13 +32,13 @@ const Todolist = (props: TodolistPropsType) => {
                 <input/>
                 <button>+</button>
                 <ul className={styles.rowsTodolist}>
-                    <li><input type='checkbox' checked={props.tasks[0].isDone}/>
-                        <span>{props.tasks[0].title}</span></li>
-                    <li><input type='checkbox' checked={props.tasks[1].isDone}/>
-                        <span>{props.tasks[1].title}</span></li>
-                    <li><input type='checkbox' checked={props.tasks[2].isDone}/>
-                        <span>{props.tasks[2].title}</span></li>
+                    {tasksElements}
                 </ul>
+                <div className={styles.buttTodolist}>
+                    <button onClick={ () => props.changeFilter('все')}>все</button>
+                    <button onClick={ () => props.changeFilter('активные')}>активные</button>
+                    <button onClick={ () => props.changeFilter('выполненные')}>выполненные</button>
+                </div>
             </div>
         </div>
     )
