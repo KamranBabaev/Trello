@@ -7,11 +7,11 @@ function App() {
 
     const [filter, setFilter] = useState<FilterValuesType>('все');
     const [tasks, setTasks] = useState<Array<tasksPropsType>>([
-        {id: v1(), title: 'HTML', isDone: true},
-        {id: v1(), title: 'CSS', isDone: true},
+        {id: v1(), title: 'HTML', isDone: false},
+        {id: v1(), title: 'CSS', isDone: false},
         {id: v1(), title: 'JavaScript', isDone: false},
         {id: v1(), title: 'React', isDone: false},
-        {id: v1(), title: 'Redux', isDone: true},
+        {id: v1(), title: 'Redux', isDone: false},
         {id: v1(), title: 'Node.js', isDone: false},
     ]);
 
@@ -35,7 +35,8 @@ function App() {
     }
 
     let changeTaskStatus = (taskID: string, isDone: boolean) => {
-        
+        const updatedTasks = tasks.map( t => t.id === taskID ? {...t, isDone: isDone} : t)
+        setTasks(updatedTasks)
     }
 
     let getFilterTasks = () => {
@@ -52,6 +53,7 @@ function App() {
     return (
         <div className="App-wrapper">
             <Todolist
+                changeTaskStatus={changeTaskStatus}
                 filter={filter}
                 title='Что будем учить?'
                 tasks={getFilterTasks()}
