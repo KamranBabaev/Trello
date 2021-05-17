@@ -5,3 +5,15 @@
     font-weight: 500;
     color: black;
 }
+
+.is-done {
+    opacity: 0.5;
+}
+
+.active-filter {
+    background-color: coral;
+}
+
+.error {
+    border: 2px solid #a31111;
+}

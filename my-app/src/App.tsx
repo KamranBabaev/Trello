@@ -5,13 +5,13 @@ import {v1} from "uuid";
 
 function App() {
 
-    let [filter, setFilter] = useState<FilterValuesType>();
-    let [tasks, setTasks] = useState<Array<tasksPropsType>>([
+    const [filter, setFilter] = useState<FilterValuesType>('все');
+    const [tasks, setTasks] = useState<Array<tasksPropsType>>([
         {id: v1(), title: 'HTML', isDone: true},
         {id: v1(), title: 'CSS', isDone: true},
-        {id: v1(), title: 'JavaScript', isDone: true},
+        {id: v1(), title: 'JavaScript', isDone: false},
         {id: v1(), title: 'React', isDone: false},
-        {id: v1(), title: 'Redux', isDone: false},
+        {id: v1(), title: 'Redux', isDone: true},
         {id: v1(), title: 'Node.js', isDone: false},
     ]);
 
@@ -34,6 +34,10 @@ function App() {
         setTasks(newArrayTasks)
     }
 
+    let changeTaskStatus = (taskID: string, isDone: boolean) => {
+        
+    }
+
     let getFilterTasks = () => {
         switch (filter) {
             case 'активные':
@@ -48,6 +52,7 @@ function App() {
     return (
         <div className="App-wrapper">
             <Todolist
+                filter={filter}
                 title='Что будем учить?'
                 tasks={getFilterTasks()}
                 removeTask={removeTask}
