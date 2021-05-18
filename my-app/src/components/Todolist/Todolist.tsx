@@ -1,5 +1,8 @@
 import React from "react";
 
+export type ValuePropsType = 'все' | 'активные' | 'выполненные'
+
+
 type TaskPropsType = {
     id: number
     title: string
@@ -10,6 +13,7 @@ type TodolistPropsType = {
     title: string
     tasks: Array<TaskPropsType>
     removeTask: (taskID: number) => void
+    changeFilterTasks: (value: ValuePropsType) => void
 }
 
 const Todolist = (props: TodolistPropsType) => {
@@ -26,9 +30,9 @@ const Todolist = (props: TodolistPropsType) => {
                     </li>)}
                 </ul>
                 <div>
-                    <button>все</button>
-                    <button>активные</button>
-                    <button>выполненные</button>
+                    <button onClick={() => props.changeFilterTasks("все")}>все</button>
+                    <button onClick={() => props.changeFilterTasks("активные")}>активные</button>
+                    <button onClick={() => props.changeFilterTasks("выполненные")}>выполненные</button>
                 </div>
             </div>
         </div>
