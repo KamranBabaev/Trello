@@ -14,6 +14,7 @@ const App = () => {
     ])
     let [filter, setFilter] = useState<ValuePropsType>('все')
 
+    //
     const removeTask = (taskID: string) => {
         let filteredTask = tasks.filter(t => t.id !== taskID)
         setTasks(filteredTask)
