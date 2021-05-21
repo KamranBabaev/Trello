@@ -1,4 +1,5 @@
 import React, {useState, ChangeEvent, KeyboardEvent} from "react";
+import styles from './Todolist.module.css'
 
 export type ValuePropsType = 'все' | 'активные' | 'выполненные'
 
@@ -45,9 +46,8 @@ const Todolist = (props: TodolistPropsType) => {
     const onClickCompletedHandler = () => props.changeFilterTasks("выполненные")
 
     return (
-        <div>
+        <div className={styles.wrapper}>
             <h1>{props.title}</h1>
-            <div>
                 <input
                     value={title}
                     onChange={onChangeHandler}
@@ -57,30 +57,36 @@ const Todolist = (props: TodolistPropsType) => {
                 <button onClick={addNewTask}>+</button>
                 {error && <div className='error-message'>не корректный ввод</div>}
 
-                <ul>
-                    {props.tasks.map(t => {
-                        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => props.changeCheckedStatus(t.id, e.currentTarget.checked)
+                <div className={styles.mainInput}>
+                    <ul>
+                        {props.tasks.map(t => {
+                            const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => props.changeCheckedStatus(t.id, e.currentTarget.checked)
 
-                        return <li key={t.id} className={t.isDone ? 'isDone' : ''}>
-                            <input type='checkbox'
-                                   onChange={onChangeHandler}
-                                   checked={t.isDone}/>
-                            <span>{t.title}</span>
-                            <button onClick={() => {
-                                props.removeTask(t.id)
-                            }}>x
-                            </button>
-                        </li>
-                    })}
-                </ul>
+                            return <li key={t.id} className={t.isDone ? 'isDone' : ''}>
+                                <input type='checkbox'
+                                       onChange={onChangeHandler}
+                                       checked={t.isDone}/>
+                                <span className={styles.title}>{t.title}</span>
+                                <button className={styles.removeButt} onClick={() => {
+                                    props.removeTask(t.id)
+                                }}>x
+                                </button>
+                            </li>
+                        })}
+                    </ul>
+                </div>
 
-                <div>
-                    <button className={props.filter === 'все' ? 'active-filter' : ''} onClick={onClickAllHandler}>все</button>
-                    <button className={props.filter === 'активные' ? 'active-filter' : ''} onClick={onClickActiveHandler}>активные</button>
-                    <button className={props.filter === 'выполненные' ? 'active-filter' : ''} onClick={onClickCompletedHandler}>выполненные</button>
+                <div className={styles.filterButt}>
+                    <button className={props.filter === 'все' ? 'active-filter' : ''} onClick={onClickAllHandler}>все
+                    </button>
+                    <button className={props.filter === 'активные' ? 'active-filter' : ''}
+                            onClick={onClickActiveHandler}>активные
+                    </button>
+                    <button className={props.filter === 'выполненные' ? 'active-filter' : ''}
+                            onClick={onClickCompletedHandler}>выполненные
+                    </button>
                 </div>
             </div>
-        </div>
     )
 }
 
