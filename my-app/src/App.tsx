@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import './App.css'
-import Todolist, {TaskPropsType, FilterPropsType} from "./components/Todolist/Todolist";
+import {TaskPropsType, FilterPropsType, Todolist} from "./components/Todolist/Todolist";
 import {v1} from "uuid";
+import AddItemForm from "./components/AddItemForm/AddItemForm";
 
 type TodolistType = {
     id: string
@@ -17,6 +18,7 @@ const App = () => {
 
     const todolistID_1 = v1()
     const todolistID_2 = v1()
+
     const [todolists, setTodolists] = useState<Array<TodolistType>>(
         [
             {id: todolistID_1, title: 'Что будем учить?', filter: 'all'},
@@ -39,12 +41,16 @@ const App = () => {
                 {id: v1(), title: 'Апельсины', isDone: false},
 
             ],
-        }
-    )
+        })
 
     const changeFilterTasks = (filter: FilterPropsType, todolistID: string) => {
         setTodolists(todolists.map(tl => tl.id === todolistID ? {...tl, filter: filter} : tl))
     }
+
+    const changeTodolistTitle = (title: string, todolistID: string) => {
+        setTodolists(todolists.map(tl => tl.id === todolistID ? {...tl, title} : tl))
+    }
+
 
     const removeTask = (taskID: string, todolistID: string) => {
         tasks[todolistID] = tasks[todolistID].filter(t => t.id !== taskID)
@@ -66,6 +72,13 @@ const App = () => {
         setTasks(copyTasks)
     }
 
+    const changeTaskTitle = (idTask: string, title: string, todolistID: string) => {
+        const copyTasks = {...tasks}
+        copyTasks[todolistID] = tasks[todolistID].map(t => t.id === idTask ? {...t, title} : t)
+        setTasks(copyTasks)
+    }
+
+
     const removeTodolist = (todolistID: string) => {
         setTodolists(todolists.filter(tl => tl.id !== todolistID))
         const copyTasks = {...tasks}
@@ -76,7 +89,7 @@ const App = () => {
     const getFilteredTasks = (tl: TodolistType) => {
         switch (tl.filter) {
             case "active":
-                return tasks[tl.id].filter(t => t.isDone)
+                return tasks[tl.id].filter(t => !t.isDone)
             case "completed":
                 return tasks[tl.id].filter(t => t.isDone)
             default:
@@ -84,10 +97,19 @@ const App = () => {
         }
     }
 
+    const addTodolist = (title: string) => {
+        const newTodolistID = v1()
+        const newTodolist: TodolistType = {
+            id: newTodolistID,
+            title,
+            filter: 'all'
+        }
+        setTodolists([...todolists, newTodolist])
+        setTasks({...tasks, [newTodolistID]: []})
+    }
 
     const todolistComponents = todolists.map(tl => {
         const tasksForTodolist = getFilteredTasks(tl)
-
         return (
             <Todolist
                 key={tl.id}
@@ -100,11 +122,15 @@ const App = () => {
                 addNewTask={addNewTask}
                 changeCheckedStatus={changeCheckedStatus}
                 removeTodolist={removeTodolist}
+                changeTaskTitle={changeTaskTitle}
+                changeTodolistTitle={changeTodolistTitle}
             />
         )
     })
+
     return (
         <div className='App-wrapper'>
+            <AddItemForm addItem={addTodolist}/>
             {todolistComponents}
         </div>
     )
