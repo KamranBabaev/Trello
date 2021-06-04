@@ -50,6 +50,14 @@ export const App = () => {
         setTasks({...tasks})
     }
 
+    const changeTodolistTitle = (id: string, newTitle: string) => {
+        const todolist = todolists.find(td => td.id === id)
+        if (todolist) {
+            todolist.title = newTitle
+            setTodolists([...todolists])
+        }
+    }
+
     const addNewTask = (title: string, todolistID: string) => {
         debugger
         let task = {id: v1(), title: title, isDone: false}
@@ -64,6 +72,15 @@ export const App = () => {
         let task = copyTasks.find(t => t.id === id)
         if (task) {
             task.isDone = isDone
+            setTasks({...tasks})
+        }
+    }
+
+    const changeTitle = (id: string, newTitle: string, todolistID: string) => {
+        let copyTasks = tasks[todolistID]
+        let task = copyTasks.find(t => t.id === id)
+        if (task) {
+            task.title = newTitle
             setTasks({...tasks})
         }
     }
@@ -113,8 +130,10 @@ export const App = () => {
                         changeFilter={changeFilter}
                         addNewTask={addNewTask}
                         changeStatus={changeStatus}
+                        changeTitle={changeTitle}
                         filter={td.filter}
                         removeTodolist={removeTodolist}
+                        changeTodolistTitle={changeTodolistTitle}
                     />
                 })
             }
