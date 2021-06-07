@@ -7,7 +7,7 @@ type AddItemFormType = {
 export const AddItemForm = (props: AddItemFormType) => {
 
     let [error, setError] = useState<string | null>(null)
-    let [title, setTitle] = useState('')
+    let [title, setTitle] = useState<string>('')
 
     const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
         setTitle(event.currentTarget.value)
