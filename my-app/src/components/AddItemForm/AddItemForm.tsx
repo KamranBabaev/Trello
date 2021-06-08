@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Button, Grid, Input, TextField} from "@material-ui/core";
+import {AddBox} from "@material-ui/icons";
 
 type AddItemFormType = {
     addItem: (title: string) => void
@@ -6,7 +8,7 @@ type AddItemFormType = {
 
 export const AddItemForm = (props: AddItemFormType) => {
 
-    let [error, setError] = useState<string | null>(null)
+    let [error, setError] = useState<boolean | null>(null)
     let [title, setTitle] = useState<string>('')
 
     const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,19 +26,26 @@ export const AddItemForm = (props: AddItemFormType) => {
             props.addItem(newTitle)
             setTitle('')
         } else {
-            setError('не корректный ввод')
+            setError(false)
         }
     }
 
     return (
         <div>
-            <input value={title}
-                   onChange={onChangeTitle}
-                   onKeyPress={onKeyPressEnter}
-                   className={error ? 'error' : ''}
-            />
-            <button onClick={addNewTask}>+</button>
-            {error && <div className='error_message'>{error}</div>}
+            <Grid spacing={2}>
+                <TextField variant={"outlined"}
+                           size={"small"}
+                           value={title}
+                           onChange={onChangeTitle}
+                           onKeyPress={onKeyPressEnter}
+                           error
+                           label={"new task"}
+                />
+                <Button onClick={addNewTask}
+                        color={"secondary"}
+                        size={"small"}><AddBox /></Button>
+                {error && <div className='error_message'>{error}</div>}
+            </Grid>
         </div>
     )
 }

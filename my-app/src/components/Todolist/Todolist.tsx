@@ -3,6 +3,8 @@ import {TaskType} from "../../App";
 import style from './Todolist.module.css'
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
+import {Button, Checkbox, Grid, IconButton, Input, TextField} from "@material-ui/core";
+import {Delete} from "@material-ui/icons";
 
 export type ValuePropsType = 'all' | 'active' | 'completed'
 
@@ -35,7 +37,8 @@ export const Todolist = (props: TodolistPropsType) => {
 
     return <div className={style.todolists}>
         <h3><EditableSpan title={props.title} onChange={changeTodolistTitle}/>
-            <button onClick={removeTodolist}>x</button>
+            <IconButton onClick={removeTodolist} color={"secondary"}
+            ><Delete/></IconButton>
         </h3>
 
         <AddItemForm addItem={addTask}/>
@@ -52,25 +55,40 @@ export const Todolist = (props: TodolistPropsType) => {
                         props.changeTitle(t.id, newValue, props.id)
                     }
 
-                    return <li key={t.id} className={t.isDone ? 'is_Done' : ''}>
-                        <input type='checkbox' onChange={onChangeStatusTask} checked={t.isDone}/>
-                        <EditableSpan title={t.title}
-                                      onChange={onChangeTitleTask}
-                        />
-                        <button onClick={onClickRemoveTask}>x</button>
-                    </li>
+                    return <Grid spacing={3}>
+                        <div key={t.id} className={t.isDone ? 'is_Done' : ''}>
+                            <Checkbox onChange={onChangeStatusTask}
+                                      checked={t.isDone}
+                                      color={'primary'}
+                                      size={'small'}/>
+                            <EditableSpan title={t.title}
+                                          onChange={onChangeTitleTask}
+                            />
+                            <IconButton onClick={onClickRemoveTask} color={"secondary"}
+                            ><Delete/></IconButton>
+                        </div>
+                    </Grid>
                 })}
         </ul>
         <div>
-            <button onClick={onClickAll}
-                    className={props.filter === 'all' ? 'active_filter' : ''}>все
-            </button>
-            <button onClick={onClickActive}
-                    className={props.filter === 'active' ? 'active_filter' : ''}>активные
-            </button>
-            <button onClick={onClickCompleted}
-                    className={props.filter === 'completed' ? 'active_filter' : ''}>выполненные
-            </button>
+            <Button variant={props.filter === 'all' ? "contained" : "outlined"}
+                    style={{margin: "5px"}}
+                    color={"secondary"}
+                    size={"small"}
+                    onClick={onClickAll}>все
+            </Button>
+            <Button variant={props.filter === 'active' ? "contained" : "outlined"}
+                    style={{margin: "5px"}}
+                    color={"secondary"}
+                    size={"small"}
+                    onClick={onClickActive}>активные
+            </Button>
+            <Button variant={props.filter === 'completed' ? "contained" : "outlined"}
+                    style={{margin: "5px"}}
+                    color={"secondary"}
+                    size={"small"}
+                    onClick={onClickCompleted}>выполненные
+            </Button>
         </div>
     </div>
 }
