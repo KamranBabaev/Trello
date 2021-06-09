@@ -75,19 +75,19 @@ export const Todolist = (props: TodolistPropsType) => {
             </Grid>
             <div>
                 <Button variant={props.filter === 'all' ? "contained" : "outlined"}
-                        style={{margin: "5px"}}
+                        style={{margin: "5px", color: "white", fontWeight: "bold", fontSize: "11px" }}
                         color={"secondary"}
                         size={"small"}
                         onClick={onClickAll}>все
                 </Button>
                 <Button variant={props.filter === 'active' ? "contained" : "outlined"}
-                        style={{margin: "5px"}}
+                        style={{margin: "5px", color: "black", fontWeight: "bold", fontSize: "11px"  }}
                         color={"secondary"}
                         size={"small"}
                         onClick={onClickActive}>активные
                 </Button>
                 <Button variant={props.filter === 'completed' ? "contained" : "outlined"}
-                        style={{margin: "5px"}}
+                        style={{margin: "5px", color: "black", fontWeight: "bold", fontSize: "11px"  }}
                         color={"secondary"}
                         size={"small"}
                         onClick={onClickCompleted}>выполненные
