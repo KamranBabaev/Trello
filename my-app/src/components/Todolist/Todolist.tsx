@@ -35,60 +35,64 @@ export const Todolist = (props: TodolistPropsType) => {
         props.changeTodolistTitle(props.id, newTitle)
     }
 
-    return <div className={style.todolists}>
-        <h3><EditableSpan title={props.title} onChange={changeTodolistTitle}/>
-            <IconButton onClick={removeTodolist} color={"secondary"}
-            ><Delete/></IconButton>
-        </h3>
+    return <Grid spacing={3}>
+        <div className={style.todolists}>
+            <h3><EditableSpan title={props.title} onChange={changeTodolistTitle}/>
+                <IconButton onClick={removeTodolist} color={"secondary"}
+                ><Delete/></IconButton>
+            </h3>
 
-        <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask}/>
 
-        <ul>
-            {
-                props.tasks.map(t => {
-                    const onClickRemoveTask = () => props.removeTask(t.id, props.id)
-                    const onChangeStatusTask = (event: ChangeEvent<HTMLInputElement>) => {
-                        let newIsDoneValue = event.currentTarget.checked
-                        props.changeStatus(t.id, newIsDoneValue, props.id)
-                    }
-                    const onChangeTitleTask = (newValue: string) => {
-                        props.changeTitle(t.id, newValue, props.id)
-                    }
+            <Grid spacing={3}>
+                <div>
+                    {
+                        props.tasks.map(t => {
+                            const onClickRemoveTask = () => props.removeTask(t.id, props.id)
+                            const onChangeStatusTask = (event: ChangeEvent<HTMLInputElement>) => {
+                                let newIsDoneValue = event.currentTarget.checked
+                                props.changeStatus(t.id, newIsDoneValue, props.id)
+                            }
+                            const onChangeTitleTask = (newValue: string) => {
+                                props.changeTitle(t.id, newValue, props.id)
+                            }
 
-                    return <Grid spacing={3}>
-                        <div key={t.id} className={t.isDone ? 'is_Done' : ''}>
-                            <Checkbox onChange={onChangeStatusTask}
-                                      checked={t.isDone}
-                                      color={'primary'}
-                                      size={'small'}/>
-                            <EditableSpan title={t.title}
-                                          onChange={onChangeTitleTask}
-                            />
-                            <IconButton onClick={onClickRemoveTask} color={"secondary"}
-                            ><Delete/></IconButton>
-                        </div>
-                    </Grid>
-                })}
-        </ul>
-        <div>
-            <Button variant={props.filter === 'all' ? "contained" : "outlined"}
-                    style={{margin: "5px"}}
-                    color={"secondary"}
-                    size={"small"}
-                    onClick={onClickAll}>все
-            </Button>
-            <Button variant={props.filter === 'active' ? "contained" : "outlined"}
-                    style={{margin: "5px"}}
-                    color={"secondary"}
-                    size={"small"}
-                    onClick={onClickActive}>активные
-            </Button>
-            <Button variant={props.filter === 'completed' ? "contained" : "outlined"}
-                    style={{margin: "5px"}}
-                    color={"secondary"}
-                    size={"small"}
-                    onClick={onClickCompleted}>выполненные
-            </Button>
+                            return <Grid spacing={3}>
+                                <div key={t.id} className={t.isDone ? 'is_Done' : ''}>
+                                    <Checkbox onChange={onChangeStatusTask}
+                                              checked={t.isDone}
+                                              color={'primary'}
+                                              size={'small'}/>
+                                    <EditableSpan title={t.title}
+                                                  onChange={onChangeTitleTask}
+                                    />
+                                    <IconButton onClick={onClickRemoveTask} color={"secondary"}
+                                    ><Delete/></IconButton>
+                                </div>
+                            </Grid>
+                        })}
+                </div>
+            </Grid>
+            <div>
+                <Button variant={props.filter === 'all' ? "contained" : "outlined"}
+                        style={{margin: "5px"}}
+                        color={"secondary"}
+                        size={"small"}
+                        onClick={onClickAll}>все
+                </Button>
+                <Button variant={props.filter === 'active' ? "contained" : "outlined"}
+                        style={{margin: "5px"}}
+                        color={"secondary"}
+                        size={"small"}
+                        onClick={onClickActive}>активные
+                </Button>
+                <Button variant={props.filter === 'completed' ? "contained" : "outlined"}
+                        style={{margin: "5px"}}
+                        color={"secondary"}
+                        size={"small"}
+                        onClick={onClickCompleted}>выполненные
+                </Button>
+            </div>
         </div>
-    </div>
+    </Grid>
 }

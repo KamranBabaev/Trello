@@ -109,13 +109,9 @@ export const App = () => {
     }
 
     return (
-        <Grid spacing={10}
-              container
-              direction="row"
-              justify="center"
-              alignItems="center">
-            <div className='App-wrapper'>
-                <Container fixed>
+        <Container fixed>
+            <Grid spacing={10} style={ {padding: "25px"}  }>
+                <div className='App-wrapper'>
 
                     <AddItemForm addItem={addTodolist}/>
                     {
@@ -144,8 +140,8 @@ export const App = () => {
                             />
                         })
                     }
-                </Container>
-            </div>
-        </Grid>
+                </div>
+            </Grid>
+        </Container>
     )
 }
