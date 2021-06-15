@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {Todolist, ValuePropsType} from "./components/Todolist/Todolist";
+import {FilterPropsType, Todolist} from "./components/Todolist/Todolist";
 import {v1} from "uuid";
 import './App.css'
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
-import {Container, Grid} from "@material-ui/core";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
+import {Menu} from "@material-ui/icons";
 
 export type TaskType = {
     id: string
@@ -11,10 +12,10 @@ export type TaskType = {
     isDone: boolean
 }
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
-    filter: ValuePropsType
+    filter: FilterPropsType
 }
 
 export type TasksStateType = {
@@ -43,6 +44,8 @@ export const App = () => {
             {id: v1(), title: 'second', isDone: false},
         ]
     })
+
+
 
 
     const removeTask = (id: string, todolistID: string) => {
@@ -77,6 +80,9 @@ export const App = () => {
         }
     }
 
+
+
+
     const changeTitle = (id: string, newTitle: string, todolistID: string) => {
         let copyTasks = tasks[todolistID]
         let task = copyTasks.find(t => t.id === id)
@@ -86,10 +92,10 @@ export const App = () => {
         }
     }
 
-    const changeFilter = (value: ValuePropsType, todolistID: string) => {
-        let todolist = todolists.find(td => td.id === todolistID)
+    const changeFilter = (filter: FilterPropsType, todolistID: string) => {
+        const todolist = todolists.find(td => td.id === todolistID)
         if (todolist) {
-            todolist.filter = value
+            todolist.filter = filter
             setTodolists([...todolists])
         }
     }
@@ -108,12 +114,29 @@ export const App = () => {
         setTasks({...tasks, [todolist.id]: []})
     }
 
-    return (
-        <Container fixed>
-            <Grid spacing={10} style={ {padding: "25px"}  }>
-                <div className='App-wrapper'>
 
+
+
+    return (
+        <div className='App-wrapper'>
+
+            <AppBar position={"static"}>
+                <Toolbar>
+                    <IconButton>
+                        <Menu/>
+                    </IconButton>
+                    <Typography>
+                        news
+                    </Typography>
+                    <Button color={"inherit"}>login</Button>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <Grid container style={ {padding: "25px"} }>
                     <AddItemForm addItem={addTodolist}/>
+                </Grid>
+
+                <Grid container spacing={3}>
                     {
                         todolists.map(td => {
                             let tasksForTodolist = tasks[td.id];
@@ -124,24 +147,29 @@ export const App = () => {
                                 tasksForTodolist = tasksForTodolist.filter(t => t.isDone)
                             }
 
-                            return <Todolist
-                                key={td.id}
-                                id={td.id}
-                                title={td.title}
-                                tasks={tasksForTodolist}
-                                removeTask={removeTask}
-                                changeFilter={changeFilter}
-                                addNewTask={addNewTask}
-                                changeStatus={changeStatus}
-                                changeTitle={changeTitle}
-                                filter={td.filter}
-                                removeTodolist={removeTodolist}
-                                changeTodolistTitle={changeTodolistTitle}
-                            />
+                            return <Grid item style={ {margin: "10px"} }>
+                                <Paper style={ {padding: "25px"} }>
+                                    <Todolist
+                                        key={td.id}
+                                        id={td.id}
+                                        title={td.title}
+                                        tasks={tasksForTodolist}
+                                        removeTask={removeTask}
+                                        changeFilter={changeFilter}
+                                        addNewTask={addNewTask}
+                                        changeStatus={changeStatus}
+                                        changeTitle={changeTitle}
+                                        filter={td.filter}
+                                        removeTodolist={removeTodolist}
+                                        changeTodolistTitle={changeTodolistTitle}
+                                    />
+                                </Paper>
+                            </Grid>
                         })
                     }
-                </div>
-            </Grid>
-        </Container>
+                </Grid>
+            </Container>
+
+        </div>
     )
 }

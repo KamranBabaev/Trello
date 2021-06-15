@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, Grid, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 type AddItemFormType = {
@@ -32,20 +32,21 @@ export const AddItemForm = (props: AddItemFormType) => {
 
     return (
         <div>
-            <Grid spacing={3}>
-                <TextField variant={"outlined"}
-                           size={"small"}
-                           value={title}
-                           onChange={onChangeTitle}
-                           onKeyPress={onKeyPressEnter}
-                           error={!!error}
-                           label={"new task"}
-                />
-                <Button onClick={addNewTask}
-                        color={"secondary"}
-                        size={"small"}><AddBox /></Button>
-                {error && <div className='error_message'>{error}</div>}
-            </Grid>
+            <TextField onChange={onChangeTitle}
+                       onKeyPress={onKeyPressEnter}
+                       variant={"outlined"}
+                       size={"small"}
+                       value={title}
+                       label={"add new"}
+                       multiline
+                       error={!!error}
+                       helperText={error}
+            />
+            <IconButton onClick={addNewTask}
+                        color={"primary"}
+                        size={"small"}>
+                <AddBox/>
+            </IconButton>
         </div>
     )
 }
