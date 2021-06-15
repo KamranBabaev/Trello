@@ -3,33 +3,33 @@ import {v1} from "uuid";
 import {FilterPropsType} from "../components/Todolist/Todolist";
 
 
-type RemoveTodolistActionType = {
+type RemoveTodolistAT = {
     type: 'REMOVE-TODOLIST'
     id: string
 }
 
-type AddTodolistActionType = {
+type AddTodolistAT = {
     type: 'ADD-TODOLIST'
     title: string
 }
 
-type ChangeTodolistFilterActionType = {
+type ChangeTodolistFilterAT = {
     type: 'CHANGE-TODOLIST-FILTER'
     filter: FilterPropsType
     todolistID: string
 }
 
-type ChangeTodolistTitleActionType = {
+type ChangeTodolistTitleAT = {
     type: 'CHANGE-TODOLIST-TITLE'
     id: string
     newTitle: string
 }
 
 type ActionType =
-    RemoveTodolistActionType
-    | AddTodolistActionType
-    | ChangeTodolistFilterActionType
-    | ChangeTodolistTitleActionType
+    RemoveTodolistAT
+    | AddTodolistAT
+    | ChangeTodolistFilterAT
+    | ChangeTodolistTitleAT
 
 
 export const todolistsReducer = (todolists: Array<TodolistType>, action: ActionType) => {
@@ -53,21 +53,21 @@ export const todolistsReducer = (todolists: Array<TodolistType>, action: ActionT
 
 }
 
-export const RemoveTodolistActionCreator = (id: string): RemoveTodolistActionType => {
+export const RemoveTodolistActionCreator = (id: string): RemoveTodolistAT => {
     return {
         type: 'REMOVE-TODOLIST',
         id: id,
     }
 }
 
-export const AddTodolistActionCreator = (title: string): AddTodolistActionType => {
+export const AddTodolistActionCreator = (title: string): AddTodolistAT => {
     return {
         type: "ADD-TODOLIST",
         title: title
     }
 }
 
-export const ChangeTodolistFilterActionCreator = (filter: FilterPropsType, id: string): ChangeTodolistFilterActionType => {
+export const ChangeTodolistFilterActionCreator = (filter: FilterPropsType, id: string): ChangeTodolistFilterAT => {
     return {
         type: "CHANGE-TODOLIST-FILTER",
         filter: filter,
@@ -75,7 +75,7 @@ export const ChangeTodolistFilterActionCreator = (filter: FilterPropsType, id: s
     }
 }
 
-export const ChangeTodolistTitleActionCreator = (title: string, id: string): ChangeTodolistTitleActionType => {
+export const ChangeTodolistTitleActionCreator = (title: string, id: string): ChangeTodolistTitleAT => {
     return {
         type: "CHANGE-TODOLIST-TITLE",
         newTitle: title,
