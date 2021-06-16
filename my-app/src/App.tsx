@@ -47,7 +47,6 @@ export const App = () => {
 
 
 
-
     const removeTask = (id: string, todolistID: string) => {
         let copyTasks = tasks[todolistID]
         tasks[todolistID] = copyTasks.filter(t => t.id !== id)
@@ -148,7 +147,7 @@ export const App = () => {
                             }
 
                             return <Grid item style={ {margin: "10px"} }>
-                                <Paper style={ {padding: "25px"} }>
+                                <Paper style={ {padding: "20px"} }>
                                     <Todolist
                                         key={td.id}
                                         id={td.id}
