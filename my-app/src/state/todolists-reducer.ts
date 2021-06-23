@@ -3,14 +3,15 @@ import {v1} from "uuid";
 import {FilterPropsType} from "../components/Todolist/Todolist";
 
 
-type RemoveTodolistAT = {
+export type RemoveTodolistAT = {
     type: 'REMOVE-TODOLIST'
     id: string
 }
 
-type AddTodolistAT = {
+export type AddTodolistAT = {
     type: 'ADD-TODOLIST'
     title: string
+    todolistID: string
 }
 
 type ChangeTodolistFilterAT = {
@@ -32,21 +33,20 @@ type ActionType =
     | ChangeTodolistTitleAT
 
 
-export const todolistsReducer = (todolists: Array<TodolistType>, action: ActionType) => {
+export const todolistsReducer = (todolists: Array<TodolistType>, action: ActionType): Array<TodolistType>  => {
 
     switch (action.type) {
         case 'REMOVE-TODOLIST':
             return todolists.filter(td => td.id !== action.id)
         case 'ADD-TODOLIST':
-            const newTodolistID = v1()
             const newTodolist: TodolistType = {
-                id: newTodolistID, filter: "all", title: action.title
+                id: action.todolistID, filter: "all", title: action.title
             }
             return [...todolists, newTodolist]
         case "CHANGE-TODOLIST-FILTER":
-            return todolists.map(td => td.id === action.todolistID ? {...td, filter: action.filter} : todolists)
+            return todolists.map(td => td.id === action.todolistID ? {...td, filter: action.filter} : td)
         case 'CHANGE-TODOLIST-TITLE':
-            return todolists.map(td => td.title === action.id ? {...td, filter: action.newTitle} : todolists)
+            return todolists.map(td => td.id === action.id ? {...td, title: action.newTitle} : td)
         default:
             return todolists
     }
@@ -60,10 +60,11 @@ export const RemoveTodolistActionCreator = (id: string): RemoveTodolistAT => {
     }
 }
 
-export const AddTodolistActionCreator = (title: string): AddTodolistAT => {
+export const AddTodolistAC = (title: string): AddTodolistAT => {
     return {
-        type: "ADD-TODOLIST",
-        title: title
+        type: 'ADD-TODOLIST',
+        title,
+        todolistID: v1()
     }
 }
 
