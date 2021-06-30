@@ -48,33 +48,38 @@ export const Todolist = (props: TodolistPropsType) => {
 
             <AddItemForm addItem={addTask}/>
 
+
             <div>
                 {
-                    props.tasks.map(t => {
-                        const onClickRemoveTask = () => props.removeTask(t.id, props.id)
+                    props.tasks
+                        .map(t => {
+                            const onClickRemoveTask = () => props.removeTask(t.id, props.id)
 
-                        const onChangeStatusTask = (event: ChangeEvent<HTMLInputElement>) => {
-                            let newIsDoneValue = event.currentTarget.checked
-                            props.changeStatus(t.id, newIsDoneValue, props.id)
-                        }
+                            const onChangeStatusTask = (event: ChangeEvent<HTMLInputElement>) => {
+                                let newIsDoneValue = event.currentTarget.checked
+                                props.changeStatus(t.id, newIsDoneValue, props.id)
+                            }
 
-                        const onChangeTitleTask = (newValue: string) => {
-                            props.changeTitle(t.id, newValue, props.id)
-                        }
+                            // debugger
+                            const onChangeTitleTask = (newValue: string) => {
+                                props.changeTitle(t.id, newValue, props.id)
+                            }
 
-                        return <div key={t.id} className={t.isDone ? 'is_Done' : ''}>
-                            <Checkbox onChange={onChangeStatusTask}
-                                      checked={t.isDone}
-                                      color={'primary'}
-                                      size={'small'}/>
-                            <EditableSpan title={t.title}
-                                          onChange={onChangeTitleTask}
-                            />
-                            <IconButton onClick={onClickRemoveTask} color={"primary"}>
-                                <Delete style={{width: '17px', color: 'gray'}}/>
-                            </IconButton>
-                        </div>
-                    })
+                            return <div key={t.id}
+                                        className={t.isDone ? 'is_Done' : ''}>
+                                <Checkbox onChange={onChangeStatusTask}
+                                          checked={t.isDone}
+                                          color={'primary'}
+                                          size={'small'}
+                                />
+                                <EditableSpan title={t.title}
+                                              onChange={onChangeTitleTask}
+                                />
+                                <IconButton onClick={onClickRemoveTask} color={"primary"}>
+                                    <Delete style={{width: '17px', color: 'gray'}}/>
+                                </IconButton>
+                            </div>
+                        })
                 }
             </div>
 
