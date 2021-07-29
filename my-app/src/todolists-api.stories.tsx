@@ -60,5 +60,5 @@ export const DeleteTodolist = () => {
 }
 
 export default {
-    title: 'API'
+    title: 'todolistAPI'
 }
