@@ -16,17 +16,17 @@ import {Menu} from '@material-ui/icons';
 import {
   addTodolistAC,
   changeTodolistFilterAC,
-  changeTodolistTitleAC,
+  changeTodolistTitleAC, deleteTodolistTC,
   fetchTodolistsTC,
   FilterValuesType,
-  removeTodolistAC,
-  TodolistDomainType
+  removeTodolistAC, setTodolistTC,
+  TodolistDomainType, updateTodolistTitleTC
 } from './state/todolists-reducer'
 import {
-  addTaskAC, addTaskTC,
-  changeTaskStatusAC,
+  addTaskTC,
   changeTaskTitleAC,
-  removeTaskTC, updateTaskStatusTC
+  removeTaskTC,
+  updateTaskStatusTC
 } from './state/tasks-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
@@ -43,8 +43,10 @@ function App() {
     dispatch(fetchTodolistsTC())
   }, [])
 
-  const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-  const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+  const todolists = useSelector<AppRootStateType,
+      Array<TodolistDomainType>>(state => state.todolists)
+  const tasks = useSelector<AppRootStateType,
+      TasksStateType>(state => state.tasks)
 
   const removeTask = useCallback(function (id: string, todolistId: string) {
     dispatch(removeTaskTC(id, todolistId));
@@ -69,19 +71,16 @@ function App() {
   }, []);
 
   const removeTodolist = useCallback(function (id: string) {
-    const action = removeTodolistAC(id);
-    dispatch(action);
+    dispatch(deleteTodolistTC(id));
   }, []);
 
   const changeTodolistTitle = useCallback(function (id: string, title: string) {
-    const action = changeTodolistTitleAC(id, title);
-    dispatch(action);
+    dispatch(updateTodolistTitleTC(id, title));
   }, []);
 
   const addTodolist = useCallback((title: string) => {
-    const action = addTodolistAC(title);
-    dispatch(action);
-  }, [dispatch]);
+    dispatch(setTodolistTC(title));
+  }, []);
 
   return (
       <div className="App">

@@ -34,10 +34,7 @@ export type SetTodolistsActionType = {
   todolists: Array<TodolistType>
 }
 
-const initialState: Array<TodolistDomainType> = [
-  /*{id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
-  {id: todolistId2, title: 'What to buy', filter: 'all', addedDate: '', order: 0}*/
-]
+const initialState: Array<TodolistDomainType> = []
 
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState,
                                  action: ActionsType): Array<TodolistDomainType> => {
@@ -101,6 +98,33 @@ export const fetchTodolistsTC = () => {
     todolistsAPI.getTodolists()
         .then((res) => {
           dispatch(setTodolistsAC(res.data))
+        })
+  }
+}
+
+export const setTodolistTC = (title: string) => {
+  return (dispatch: Dispatch) => {
+    todolistsAPI.createTodolist(title)
+        .then((res) => {
+          dispatch(addTodolistAC(title))
+        })
+  }
+}
+
+export const deleteTodolistTC = (todolistId: string) => {
+  return (dispatch: Dispatch) => {
+    todolistsAPI.deleteTodolist(todolistId)
+        .then((res) => {
+          dispatch(removeTodolistAC(todolistId))
+        })
+  }
+}
+
+export const updateTodolistTitleTC = (todolistId: string, title: string) => {
+  return (dispatch: Dispatch) => {
+    todolistsAPI.updateTodolist(todolistId, title)
+        .then((res) => {
+          dispatch(changeTodolistTitleAC(todolistId, title))
         })
   }
 }
