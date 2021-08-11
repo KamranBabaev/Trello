@@ -14,13 +14,13 @@ import {
 } from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
-  addTodolistAC,
   changeTodolistFilterAC,
-  changeTodolistTitleAC, deleteTodolistTC,
+  deleteTodolistTC,
   fetchTodolistsTC,
   FilterValuesType,
-  removeTodolistAC, setTodolistTC,
-  TodolistDomainType, updateTodolistTitleTC
+  setTodolistTC,
+  TodolistDomainType,
+  updateTodolistTitleTC
 } from './state/todolists-reducer'
 import {
   addTaskTC,
